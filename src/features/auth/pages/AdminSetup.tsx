@@ -5,6 +5,7 @@ import { Input } from "../../../shared/components/ui/Input";
 import { Button } from "../../../shared/components/ui/Button";
 import { initializeAdminAccount } from "../../../lib/controllers/auth.controller";
 import { useAuth } from "../../../hooks/useAuth";
+import { useEffect } from "react";
 import { ROUTES } from "../../../utils/constants";
 import { toast } from "react-toastify";
 import { ShieldCheck, ArrowRight, Landmark } from "lucide-react";
@@ -14,7 +15,13 @@ export function AdminSetup() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { refreshUser } = useAuth();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user && user.role === "admin") {
+      navigate(ROUTES.ADMIN_DASHBOARD, { replace: true });
+    }
+  }, [user, navigate]);
 
   const handleSetup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,9 +32,7 @@ export function AdminSetup() {
     setLoading(true);
     try {
       await initializeAdminAccount(email, password);
-      await refreshUser();
-      toast.success("Admin account initialized successfully!");
-      navigate(ROUTES.ADMIN_DASHBOARD);
+      toast.success("Admin account initialized! Logging in...");
     } catch (error: any) {
       toast.error(error.message || "Failed to initialize admin account");
     } finally {

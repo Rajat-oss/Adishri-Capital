@@ -5,6 +5,7 @@ import { Input } from "../../../shared/components/ui/Input";
 import { Button } from "../../../shared/components/ui/Button";
 import { loginWithEmail } from "../../../lib/services/auth.service";
 import { useAuth } from "../../../hooks/useAuth";
+import { useEffect } from "react";
 import { ROUTES } from "../../../utils/constants";
 import { toast } from "react-toastify";
 import { ShieldCheck, Landmark } from "lucide-react";
@@ -15,18 +16,25 @@ export function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { refreshUser } = useAuth();
+  const { user } = useAuth();
   // Redirect back to the page the user originally tried to visit,
   // falling back to the admin dashboard if there's no saved location.
   const from = (location.state as { from?: string })?.from ?? ROUTES.ADMIN_DASHBOARD;
+
+  // React to Auth State Changes
+  useEffect(() => {
+    if (user && user.role === "admin") {
+      navigate(from, { replace: true });
+    }
+  }, [user, navigate, from]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
       await loginWithEmail(email, password);
-      await refreshUser();
-      navigate(from, { replace: true });
+      // Wait for the auth state listener to pick this up. 
+      // The useEffect will automatically fire the navigation once user is loaded.
     } catch (error: any) {
       // Map Firebase error codes to human-readable messages
       const code = error?.code ?? "";
