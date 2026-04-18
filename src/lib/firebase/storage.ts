@@ -1,11 +1,6 @@
 const IMAGEKIT_UPLOAD_URL = "https://upload.imagekit.io/api/v1/files/upload";
 
 export const uploadFile = async (file: File, path: string): Promise<string> => {
- feature/admin-dashboard
-  const storageRef = ref(storage, path);
-  const snapshot = await uploadBytes(storageRef, file);
-  return await getDownloadURL(snapshot.ref);
-  // jsbdbcbx sbbcdjbsb
 
   const formData = new FormData();
   formData.append("file", file);
@@ -43,5 +38,5 @@ export const uploadFile = async (file: File, path: string): Promise<string> => {
     if (err.name === "AbortError") throw new Error("Upload timed out.");
     throw err;
   }
- main
+
 };

@@ -99,7 +99,7 @@ export function AdminDashboard() {
 
   return (
     <motion.div
-      variants={pageVariants}
+      variants={pageVariants as any}
       initial="hidden"
       animate="visible"
       className="px-8 pb-12 pt-6 max-w-[1440px] mx-auto font-sans bg-[#F8F9FA]"

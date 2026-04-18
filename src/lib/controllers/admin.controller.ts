@@ -45,7 +45,7 @@ export const disburseLoan = async (appId: string): Promise<void> => {
     createLoan(appId, {
       loanId:           app.appId,
       applicationId:    appId,
-      userId:           app.userId ?? "",
+      userId:           (app as any).userId ?? "",
       totalAmount:      app.finalAmount ?? 0,
       interestRate:     app.finalInterestRate ?? 0,
       totalPayable,
@@ -130,7 +130,7 @@ export const fetchDashboardStats = async (): Promise<DashboardStats> => {
       totalExposure += app.finalAmount ?? 0;
       pendingRecoveries += app.remainingBalance ?? app.finalAmount ?? 0;
     }
-    if (PENDING_STATUSES.includes(app.status)) {
+    if (PENDING_STATUSES.includes(app.status as any)) {
       pendingVerifications++;
     }
   });
