@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "seed": "tsx scripts/seed-database.ts"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -29,7 +28,6 @@
     "tailwind-merge": "^3.5.0",
     "zod": "^4.3.6"
   },
-  "dependencies_note": "firebase-admin and dotenv are used only by the seed script (Node context)",
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@tailwindcss/vite": "^4.2.2",
