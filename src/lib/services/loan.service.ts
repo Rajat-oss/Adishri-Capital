@@ -45,8 +45,42 @@ export const getLoan = async (id: string): Promise<Loan | null> => {
 
 /** Fetch all loans ordered by disbursement date (newest first). */
 export const getAllLoans = async (): Promise<Loan[]> => {
-  const snap = await getDocs(query(collection(db, COL), orderBy("disbursedAt", "desc")));
-  return snap.docs.map((d) => toLoan(d.id, d.data()));
+  let loans: Loan[] = [];
+  try {
+    const snap = await getDocs(query(collection(db, COL), orderBy("disbursedAt", "desc")));
+    loans = snap.docs.map((d) => toLoan(d.id, d.data()));
+  } catch (e) {
+    console.warn("Could not fetch from loans collection, possibly missing index or empty.", e);
+  }
+
+  // Fallback for missing Firebase index OR legacy applications
+  if (loans.length === 0) {
+    try {
+      const legacySnap = await getDocs(query(collection(db, "applications"), where("status", "in", ["Disbursed", "disbursed"])));
+      const legacyDocs = legacySnap.docs.map(d => {
+        const a = d.data();
+        return {
+          id: d.id,
+          loanId: a.appId,
+          applicationId: d.id,
+          userId: a.basicDetails?.email || a.userId || "Legacy",
+          totalAmount: a.finalAmount || 0,
+          interestRate: a.finalInterestRate || 0,
+          remainingBalance: a.remainingBalance ?? a.finalAmount ?? 0,
+          totalPayable: a.finalAmount || 0,
+          status: "active",
+          disbursedAt: a.createdAt,
+          createdAt: a.createdAt,
+        } as Loan;
+      });
+      loans = legacyDocs.sort((a, b) => (b.disbursedAt ?? "").localeCompare(a.disbursedAt ?? ""));
+    } catch (fallbackErr) {
+      console.error(fallbackErr);
+      throw new Error("Unable to fetch loans or legacy applications.");
+    }
+  }
+
+  return loans;
 };
 
 /** Fetch all loans for a specific borrower. Sorted client-side to avoid composite index requirement. */

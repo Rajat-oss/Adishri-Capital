@@ -14,8 +14,8 @@ export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-gray-100">
-        <div className="flex justify-between items-center p-5 border-b border-gray-100">
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-gray-100">
+        <div className="flex justify-between items-center p-5 border-b border-gray-100 shrink-0">
           <h2 className="text-lg font-bold text-gray-900 tracking-tight">{title}</h2>
           <button
             onClick={onClose}
@@ -24,8 +24,8 @@ export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) 
             <X size={18} />
           </button>
         </div>
-        <div className="p-6">{children}</div>
-        {footer && <div className="p-5 border-t border-gray-100 bg-gray-50/50 flex justify-end gap-3">{footer}</div>}
+        <div className="p-6 overflow-y-auto flex-1">{children}</div>
+        {footer && <div className="p-5 border-t border-gray-100 bg-gray-50/50 flex justify-end gap-3 shrink-0">{footer}</div>}
       </div>
     </div>
   );
