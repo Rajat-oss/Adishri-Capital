@@ -77,14 +77,9 @@ export function AdminDashboard() {
 
   const TABS = ["Overview", "Live Verification", "Users"];
 
-  // Mock historical data leading up to the REAL live data for the area chart
+  // Real live data for the area chart (Historical mapping to be implemented)
   const areaChartData = [
-    { time: "Mon", exposure: stats.totalExposure * 0.8, recovered: stats.totalRecovered * 0.7 },
-    { time: "Tue", exposure: stats.totalExposure * 0.85, recovered: stats.totalRecovered * 0.75 },
-    { time: "Wed", exposure: stats.totalExposure * 0.82, recovered: stats.totalRecovered * 0.80 },
-    { time: "Thu", exposure: stats.totalExposure * 0.9, recovered: stats.totalRecovered * 0.85 },
-    { time: "Fri", exposure: stats.totalExposure * 0.88, recovered: stats.totalRecovered * 0.90 },
-    { time: "Sat", exposure: stats.totalExposure * 0.95, recovered: stats.totalRecovered * 0.95 },
+    { time: "Previous", exposure: stats.totalExposure, recovered: stats.totalRecovered },
     { time: "Today", exposure: stats.totalExposure, recovered: stats.totalRecovered },
   ];
 

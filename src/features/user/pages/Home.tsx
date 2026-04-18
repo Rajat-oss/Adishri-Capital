@@ -83,11 +83,6 @@ const RATES = [
   { product: "Business Micro Loan", rate: "15% – 22% p.a.", fee: "1.5% (min ₹999)", closure: "4% on outstanding" },
 ];
 
-const TESTIMONIALS = [
-  { name: "Priya Sharma", city: "Mumbai", stars: 5, text: "Got ₹50,000 credited within 2 days! Super simple and transparent process." },
-  { name: "Ramesh Patel", city: "Ahmedabad", stars: 5, text: "Saved my business during an emergency. Highly recommend Adishri Capitals!" },
-  { name: "Anjali Verma", city: "Delhi", stars: 5, text: "No hidden charges, fair rates. The tracking dashboard is very helpful." },
-];
 
 /* ─────────────────────────────────────────────────────────────── */
 /*  Page                                                            */
@@ -397,51 +392,7 @@ export function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            6. TESTIMONIALS
-        ════════════════════════════════════════════════════════ */}
-        <section className="py-24 sm:py-32 bg-white relative">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16 max-w-2xl mx-auto">
-              <FadeUp>
-                <div className="inline-block px-4 py-1.5 rounded-full bg-[#E66325]/10 text-[#E66325] text-sm font-bold mb-4 tracking-wider uppercase">
-                  Testimonials
-                </div>
-                <h2 className="text-4xl sm:text-5xl font-black text-[#102777] mb-6 tracking-tight">Trusted across India</h2>
-                <p className="text-slate-600 text-lg leading-relaxed">Don't just take our word for it. Here is what they say.</p>
-              </FadeUp>
-            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-              {TESTIMONIALS.map((t, i) => (
-                <FadeUp key={t.name} delay={i * 0.1}>
-                  <div className="bg-[#FBFBFB] rounded-3xl border border-slate-100 p-10 shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-2 h-full bg-[#E66325] opacity-0 group-hover:opacity-100 transition-opacity" />
-                    
-                    {/* Stars */}
-                    <div className="flex gap-1.5 mb-6 relative z-10">
-                      {Array.from({ length: t.stars }).map((_, j) => (
-                        <Star key={j} className="w-5 h-5 fill-amber-400 text-amber-400" />
-                      ))}
-                    </div>
-                    <p className="text-slate-700 text-base leading-relaxed mb-8 italic font-medium">"{t.text}"</p>
-                    
-                    {/* Author */}
-                    <div className="flex items-center gap-4 mt-auto relative z-10">
-                      <div className="w-12 h-12 rounded-full bg-[#102777] flex items-center justify-center text-white font-bold text-lg shrink-0">
-                        {t.name[0]}
-                      </div>
-                      <div>
-                        <p className="font-extrabold text-[#102777] text-base">{t.name}</p>
-                        <p className="text-sm font-semibold text-slate-500">{t.city}</p>
-                      </div>
-                    </div>
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ════════════════════════════════════════════════════════
             7. BOTTOM CTA
